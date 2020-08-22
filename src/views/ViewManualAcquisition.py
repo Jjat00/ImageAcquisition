@@ -1,5 +1,3 @@
-import sys
-sys.path.append('../src/controllers')
 from ManualAcquisition import *
 
 class ViewManualAcquisition():
@@ -29,10 +27,6 @@ class ViewManualAcquisition():
         except:
             self.conncetButtonsThermal()
 
-    def stopCamera(self):
-            self.window.offButton.clicked.connect(
-                self.controllerManualAcq.handlerTurnOffCamera)
-
     def connectButtonsRgb(self):
         self.window.onButton.clicked.connect(
             self.controllerManualAcq.handlerTurnOnRGBCamera)
@@ -40,6 +34,8 @@ class ViewManualAcquisition():
             self.controllerManualAcq.handlerCaptureRGBImage)
         self.window.saveButton.clicked.connect(
             self.controllerManualAcq.handlerSaveRgbImage)
+        self.window.offButton.clicked.connect(
+            self.controllerManualAcq.handlerTurnOffCamera)            
 
     def connectButtonsDepth(self):
         self.window.onButton.clicked.connect(
@@ -48,6 +44,8 @@ class ViewManualAcquisition():
             self.controllerManualAcq.handlerCaptureDepthmage)
         self.window.saveButton.clicked.connect(
             self.controllerManualAcq.handlerSaveDepthImage)
+        self.window.offButton.clicked.connect(
+            self.controllerManualAcq.handlerTurnOffCamera)            
 
     def conncetButtonsThermal(self):
         self.window.onButton.clicked.connect(
@@ -56,6 +54,8 @@ class ViewManualAcquisition():
             self.controllerManualAcq.handlerCaptureThermalImage)
         self.window.saveButton.clicked.connect(
             self.controllerManualAcq.handlerSaveThermalImage)
+        self.window.offButton.clicked.connect(
+            self.controllerManualAcq.handlerTurnOffCamera)            
 
     def disconnectButtons(self):
         self.window.onButton.clicked.disconnect()

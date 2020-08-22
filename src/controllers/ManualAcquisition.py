@@ -1,6 +1,4 @@
 from PySide2 import  *
-import sys
-sys.path.append('../src/controllers')
 from ControllerManualAcquisition import *
 
 class ManualAcquisition():

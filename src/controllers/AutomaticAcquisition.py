@@ -1,13 +1,11 @@
 from PySide2 import  *
-import sys
-sys.path.append('../src/controllers')
 from ControllerAutoAcquisition import *
 
 class AutomaticAcquisition():
     def __init__(self, window):
         super(AutomaticAcquisition).__init__()
         self.window = window
-        self.controller = ControllerAutoAcquisition()
+        self.controller = ControllerAutoAcquisition(self.window)
 
     def configAdqcquisition(self):
         NoImages = int(self.window.NoImages.text())
@@ -37,4 +35,3 @@ class AutomaticAcquisition():
         pathImages, info = QtWidgets.QFileDialog.getSaveFileName(
             self.window, 'Save as', '../data/images', selectedFilter='*.png')
         return pathImages
-
