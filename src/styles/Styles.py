@@ -5,7 +5,7 @@ class Styles():
     def __init__(self, widget):
         super(Styles).__init__()
         self.widgetAcq = widget
-        self.theme2()
+        self.theme1()
         self.setIcons()
         self.formStyle()
 
@@ -100,7 +100,7 @@ class Styles():
                     border-style: inset;
                 } 
                 QPushButton:hover {
-                    background-color: #B71C1C;
+                    background-color: """+self.primaryColor+""";
                     border-style: inset;
                 } 
                 QComboBox{

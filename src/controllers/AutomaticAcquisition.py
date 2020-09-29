@@ -10,23 +10,27 @@ class AutomaticAcquisition():
     def configAdqcquisition(self):
         NoImages = int(self.window.NoImages.text())
         patternDimension = (int(self.window.cornerX.text()), int(self.window.cornerY.text()))
-        pathImages = self.saveDialog()
-        self.controller.setConfigAutoAcq(NoImages, patternDimension, pathImages)
+        self.pathImages = self.saveDialog()
+        if self.pathImages != '':
+            self.controller.setConfigAutoAcq(NoImages, patternDimension, self.pathImages)
 
     def handlerStartRgbImageAcq(self):
         self.configAdqcquisition()
-        rgbImage = self.controller.turnOnCamera(0)
-        self.window.displayAuto.addWidget(rgbImage)
+        if self.pathImages != '':
+            rgbImage = self.controller.turnOnCamera(0)
+            self.window.displayAuto.addWidget(rgbImage)
 
     def handlerStartDepthImageAcq(self):
         self.configAdqcquisition()
-        rgbImage = self.controller.turnOnCamera(1)
-        self.window.displayAuto.addWidget(rgbImage)
+        if self.pathImages != '':
+            rgbImage = self.controller.turnOnCamera(1)
+            self.window.displayAuto.addWidget(rgbImage)
 
     def handlerStartThermalImageAcq(self):
         self.configAdqcquisition()
-        rgbImage = self.controller.turnOnCamera(2)
-        self.window.displayAuto.addWidget(rgbImage)
+        if self.pathImages != '':
+            rgbImage = self.controller.turnOnCamera(2)
+            self.window.displayAuto.addWidget(rgbImage)
 
     def handlerStopAcquisition(self):
         self.controller.turnOffCamera()
