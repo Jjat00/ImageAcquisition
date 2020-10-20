@@ -12,14 +12,9 @@ import os
 
 
 """
-Directories app
-"""
-dirs = ['views', 'views/styles', 'controllers', 'acquisition']
-
-
-"""
 Add directories to path
 """
+dirs = ['views', 'controllers', 'acquisition']
 for nameDir in dirs:
     path = os.path.join(sys.path[0], nameDir)
     sys.path.append(path)

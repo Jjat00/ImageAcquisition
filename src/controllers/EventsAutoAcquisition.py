@@ -1,11 +1,11 @@
 from PySide2 import QtGui, QtWidgets, QtCore
 import numpy as np
 import cv2
-from DataAcquisition import *
+from DataAcquisition import DataAcquisition
 
 class EventsAutoAcquisition():
     """
-    docstring
+    Events for automatic intrinsic acquisition 
     """
 
     def __init__(self, window):
@@ -20,17 +20,11 @@ class EventsAutoAcquisition():
             cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
     def setConfigAutoAcq(self, NoImages, patternDimension, pathImages):
-        """
-        docstring
-        """
         self.patternDimension = patternDimension
         self.NoImagesAutoAcq = NoImages
         self.pathImages = pathImages
 
     def chooseCamera(self, whichCamera):
-        """
-        docstring
-        """
         if (whichCamera == 'RGB'):
             self.whichCamera = 'RGB'
         if (whichCamera == 'DEPTH'):
@@ -40,9 +34,6 @@ class EventsAutoAcquisition():
             self.whichCamera = 'THERMAL'
 
     def turnOnCamera(self, whichCamera):
-        """
-        docstring
-        """
         self.chooseCamera(whichCamera)
         if (self.clicStart):
             self.viewCamera.deleteLater()
@@ -51,9 +42,6 @@ class EventsAutoAcquisition():
         return self.viewCamera
 
     def turnOffCamera(self):
-        """
-        docstring
-        """
         if (self.clicStart):
             self.viewCamera.deleteLater()
             self.timerCamera.stop()
@@ -61,9 +49,6 @@ class EventsAutoAcquisition():
         self.clicStart = False
 
     def initCamera(self):
-        """
-        docstring
-        """
         self.timerCamera = QtCore.QTimer()
         self.timerCamera.setInterval(30)
         self.timerCamera.timeout.connect(self.getFrameDrawPattern)
@@ -76,26 +61,17 @@ class EventsAutoAcquisition():
         self.clicStart = True
 
     def initCounter(self):
-        """
-        docstring
-        """
         self.timerCounter = QtCore.QTimer()
         self.timerCounter.setInterval(30)
         self.timerCounter.timeout.connect(self.setValueProgressBar)
         self.timerCounter.start()
 
     def setValueProgressBar(self):
-        """ 
-        docstring
-        """
         value = (self.countNoImageAutoAcq/self.NoImagesAutoAcq)*100
         self.window.progressBarAcq.setValue(value)
         self.window.labelNoImage.setText(str(self.countNoImageAutoAcq))
 
     def getFrameDrawPattern(self):
-        """
-        docstring
-        """
         if self.countNoImageAutoAcq < self.NoImagesAutoAcq:
             if (self.whichCamera == 'RGB'):
                 frame = self.detectPattern(self.camera.getRgbImage())
@@ -112,9 +88,6 @@ class EventsAutoAcquisition():
             self.timerCamera.stop()
 
     def detectPattern(self, image):
-        """
-        docstring
-        """
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         patternDimension = (self.patternDimension[1], self.patternDimension[0])
         findCorners, corners = cv2.findChessboardCorners(
@@ -131,9 +104,6 @@ class EventsAutoAcquisition():
         return image
 
     def imageResize(self, pathImage, scalePercent):
-        """
-        docstring
-        """
         if (isinstance(pathImage, str)):
             image = cv2.imread(pathImage, cv2.IMREAD_UNCHANGED)
         else:

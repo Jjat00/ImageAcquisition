@@ -1,7 +1,11 @@
 from PySide2 import QtWidgets
 from EventsManualAcquisition import *
 
-class ControllerManualAcquisitionTab():
+class ControllerManualAcquisitionTab():   
+    """ 
+    Controller for manual intrinsic acquisition 
+    """
+
     def __init__(self, window):
         super(ControllerManualAcquisitionTab).__init__()
         self.window = window

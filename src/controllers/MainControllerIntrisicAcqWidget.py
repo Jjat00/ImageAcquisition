@@ -1,6 +1,6 @@
 from PySide2 import QtWidgets
-from controllers.ControllerAutoAcquisitionTab import ControllerAutoAcquisitionTab
-from controllers.ControllerManualAcquisitionTab import ControllerManualAcquisitionTab
+from ControllerAutoAcquisitionTab import ControllerAutoAcquisitionTab
+from ControllerManualAcquisitionTab import ControllerManualAcquisitionTab
 
 
 class MainControllerIntrisicAcqWidget():
@@ -11,12 +11,12 @@ class MainControllerIntrisicAcqWidget():
     def __init__(self, intrinsicAcquisitionWidget):
         super(MainControllerIntrisicAcqWidget).__init__()
         self.window = intrinsicAcquisitionWidget.window
-        self.connectComboBox()
+        self.connectComboBoxChosenCamera()
         intrinsicAcquisitionWidget.exec()
 
-    def connectComboBox(self):
+    def connectComboBoxChosenCamera(self):
         """
-        Connect comboBox
+        Connect comboBox chosen camera: RGB, depth or thermal camera
         """
         self.connectButtonsManualAcquisition()
         self.window.comboBoxManual.currentIndexChanged.connect(
@@ -25,8 +25,11 @@ class MainControllerIntrisicAcqWidget():
         self.window.comboBoxAuto.currentIndexChanged.connect(
             self.connectButtonsAtomaticAcquisition)
 
-    #Connect  buttons manual acquisition tab
     def connectButtonsManualAcquisition(self):
+        """ 
+        Connect  and disconnect buttons manual acquisition tab and clean workspace every
+        time the camera is changed
+        """
         self.controllerManualAcq = ControllerManualAcquisitionTab(self.window)
         chosenCamera = self.window.comboBoxManual.currentText()
         if chosenCamera == "RGB":
@@ -57,6 +60,9 @@ class MainControllerIntrisicAcqWidget():
             pass
 
     def buttonsManualAcqRgbCamera(self):
+        """
+        Connect buttons manual acquisition for rgb camera
+        """
         self.window.onButton.clicked.connect(
             self.controllerManualAcq.handlerTurnOnRGBCamera)
         self.window.captureButton.clicked.connect(
@@ -67,6 +73,9 @@ class MainControllerIntrisicAcqWidget():
             self.controllerManualAcq.handlerTurnOffCamera)
 
     def buttonsManualAcqDepthCamera(self):
+        """
+        Connect buttons manual acquisition for depth camera
+        """
         self.window.onButton.clicked.connect(
             self.controllerManualAcq.handlerTurnOnDepthCamera)
         self.window.captureButton.clicked.connect(
@@ -77,6 +86,9 @@ class MainControllerIntrisicAcqWidget():
             self.controllerManualAcq.handlerTurnOffCamera)
 
     def buttonsManualAcqThermalCamera(self):
+        """
+        Connect buttons manual acquisition for thermal camera
+        """
         self.window.onButton.clicked.connect(
             self.controllerManualAcq.handlerTurnOnThermalCamera)
         self.window.captureButton.clicked.connect(
@@ -87,54 +99,69 @@ class MainControllerIntrisicAcqWidget():
             self.controllerManualAcq.handlerTurnOffCamera)
 
     def disconnectButtonsManualAcqTab(self):
+        """
+        Disconnect buttons manual acquisition
+        """
         self.window.onButton.clicked.disconnect()
         self.window.captureButton.clicked.disconnect()
         self.window.saveButton.clicked.disconnect()
 
-    #Connect  buttons automatic acquisition tab
     def connectButtonsAtomaticAcquisition(self):
+        """ 
+        Connect and disconnect buttons automatic acquisition tab and clean workspace every
+        time the camera is changed
+        """
         self.controllerAutoAcq = ControllerAutoAcquisitionTab(self.window)
         chosenCamera = self.window.comboBoxAuto.currentText()
         if chosenCamera == "RGB":
             try:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.window.startButton.clicked.disconnect()
                 self.buttonsAutoAcqRgbCamera()
             except:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.buttonsAutoAcqRgbCamera()
         if chosenCamera == "DEPTH":
             try:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.window.startButton.clicked.disconnect()
                 self.buttonsAutoAcqDepthCamera()
             except:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.buttonsAutoAcqDepthCamera()
         if chosenCamera == "THERMAL":
             try:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.window.startButton.clicked.disconnect()
                 self.buttonsAutoAcqThermalCamera()
             except:
-                self.cleanWorkspaceAutoAcqManualAcq()
+                self.cleanWorkspaceAutoAcq()
                 self.buttonsAutoAcqThermalCamera()
         if chosenCamera == "NONE":
             pass
 
     def buttonsAutoAcqRgbCamera(self):
+        """
+        Connect buttons automatic acquisition for rgb camera
+        """
         self.window.startButton.clicked.connect(
             self.controllerAutoAcq.handlerStartRgbImageAcq)
         self.window.stopButton.clicked.connect(
             self.controllerAutoAcq.handlerStopAcquisition)
 
     def buttonsAutoAcqDepthCamera(self):
+        """
+        Connect buttons automatic acquisition for depth camera
+        """
         self.window.startButton.clicked.connect(
             self.controllerAutoAcq.handlerStartDepthImageAcq)
         self.window.stopButton.clicked.connect(
             self.controllerAutoAcq.handlerStopAcquisition)
 
     def buttonsAutoAcqThermalCamera(self):
+        """
+        Connect buttons automatic acquisition for thermal camera
+        """
         self.window.startButton.clicked.connect(
             self.controllerAutoAcq.handlerStartThermalImageAcq)
         self.window.stopButton.clicked.connect(
@@ -142,18 +169,18 @@ class MainControllerIntrisicAcqWidget():
 
     def cleanWorkspaceManualAcq(self):
         """
-        Clean worksspace remove all widget
+        Clean workspace remove all widget
         """
         for index in reversed(range(self.window.displayManual.count())):
             layoutItem = self.window.displayManual.itemAt(index)
             widgetToRemove = layoutItem.widget()
-            print("found widget: " + str(widgetToRemove))
+            print("found widget: %s" % str(widgetToRemove))
             widgetToRemove.setParent(None)
             self.window.displayManual.removeWidget(widgetToRemove)
 
-    def cleanWorkspaceAutoAcqManualAcq(self):
+    def cleanWorkspaceAutoAcq(self):
         """
-        Clean worksspace remove all widget
+        Clean workspace remove all widget
         """
         for index in reversed(range(self.window.displayAuto.count())):
             layoutItem = self.window.displayAuto.itemAt(index)

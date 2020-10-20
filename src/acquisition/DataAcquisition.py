@@ -12,7 +12,7 @@ class DataAcquisition():
 
         def getDepthData(self):
                 """ 
-                Get deth data from kinect camera
+                Get depth data from kinect camera
                 return:
                         depthData: np.array dimensions (640,480) each coordiante (u,v)
                         has a depth data of 11 bits
@@ -47,12 +47,13 @@ class DataAcquisition():
                 return:
                         thermalImage: thermal image
                 """
+                
                 ret, self.thermalImage = self.thermalCamera.read()
                 return self.thermalImage
 
         def captureRgbImage(self):
                 """
-                Capture rgb image obtained at that moment
+                Capture rgb image obtained from kinect camera
                 return:
                         rgbImageCaptured: rgb image
                 """
@@ -61,27 +62,55 @@ class DataAcquisition():
 
         def captureDepthImage(self):
                 """
-                
+                Capture depth image obtained from kinect camera
+                return:
+                        rgbImageCaptured: gray image
                 """
                 self.depthImageCaptured = self.depthImage
                 self.depthDataCaptured = self.depthData
                 return self.depthImageCaptured
 
         def captureThermalImage(self):
+                """
+                Capture thermal image obtained from FLIR thermal camera
+                return:
+                        rgbImageCaptured: rgb image
+                """
                 self.thermalImageCaptured = self.thermalImage
                 return self.thermalImageCaptured
                 
-        def saveRgbImage(self, nameImage):                                
+        def saveRgbImage(self, nameImage):         
+                """
+                Save captured rgb image 
+                paramters:
+                        nameImage: path to save image and name image
+                """
                 cv2.imwrite(nameImage, self.rgbImageCaptured)
 
         def saveDepthImage(self, nameImage):
+                """
+                Save captured depth image
+                paramters:
+                        nameImage: path to save image and name image
+                """
                 np.save(nameImage, self.depthDataCaptured)
                 cv2.imwrite(nameImage, self.depthImageCaptured)
 
         def saveThermalImage(self, nameImage):
+                """
+                Save captured thermal image
+                paramters:
+                        nameImage: path to save image and name image
+                """
                 cv2.imwrite(nameImage, self.thermalImageCaptured)
 
         def initThermalCamera(self):
+                """ 
+                Set the camera number detected on the computer
+                example:
+                        cv2.VideoCapture().open(0) -> get webcam computer camera
+                        cv2.VideoCapture().open(1) -> get thermal camera
+                """
                 self.thermalCamera = cv2.VideoCapture()
                 self.thermalCamera.open(0)
 

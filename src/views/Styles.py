@@ -2,6 +2,10 @@ from PySide2 import QtGui, QtCore
 relativePathIcons = '../public/icons/'
 
 class Styles():
+    """
+    Set style and icons to widget
+    """    
+
     def __init__(self, widget):
         super(Styles).__init__()
         self.widgetAcq = widget
@@ -50,8 +54,8 @@ class Styles():
     def formStyle(self):
         styleWindow = """
             QWidget{
-                    background: """+self.secondaryColor+""";
-                    color:  """+self.primaryText+""";
+                    background: """ + self.secondaryColor + """;
+                    color:  """ + self.primaryText + """;
                     border: none;
                     font: Ubuntu;
                     font-size: 12pt;
@@ -60,31 +64,31 @@ class Styles():
                     alignment: right;
                 }
                 QTabBar{
-                    background: """+self.primaryColor+""";
+                    background: """ + self.primaryColor + """;
                 }
                 QTabBar::tab {
-                    background: """+self.primaryColor+""";
+                    background: """ + self.primaryColor + """;
                     min-width: 10px;
                     margin: 5px;
                     margin-bottom: 10px;
                 }
                 QTabBar::tab:hover {
-                    color: """+self.secondaryColor+""";
+                    color: """ + self.secondaryColor + """;
                 }            
                 QTabBar::tab:selected {
-                    background: """+self.primaryColor+""";
-                    Color: """+self.primaryText+""";
+                    background: """ + self.primaryColor + """;
+                    Color: """ + self.primaryText + """;
                 }
                 QTabBar::tab:!selected {
-                    Color: """+self.frameCamera+""";
+                    Color: """ + self.frameCamera + """;
                 }
                 QTabBar::tab:!selected:hover {
-                    Color: """+self.primaryText+""";
+                    Color: """ + self.primaryText + """;
                 }
                 QPushButton{
-                    Background: """+self.buttons + """;
-                    Background: """+self.buttons + """;
-                    color: """+self.secondaryColor + """;
+                    Background: """ + self.buttons + """;
+                    Background: """ + self.buttons + """;
+                    color: """ + self.secondaryColor + """;
                     min-height: 40px;
                     border-radius: 2px;
                 }       

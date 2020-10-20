@@ -5,6 +5,10 @@ import sys
 import os
 
 class IntrinsicAcquisitionWidget(QtWidgets.QDialog):
+    """
+    Main QTWidget for intrinsic acquisition
+    """    
+
     def __init__(self, *args, **kwargs):
         super(IntrinsicAcquisitionWidget, self).__init__(*args, **kwargs)
         self.loadForm()
@@ -12,11 +16,11 @@ class IntrinsicAcquisitionWidget(QtWidgets.QDialog):
         Styles(self)
 
     def initUI(self):
-        self.setWindowTitle("Data Acquisition")
+        self.setWindowTitle("Intrisic Acquisition")
         self.setGeometry(300, 100, 705, 600)
 
     def loadForm(self):
-        formUI = os.path.join(sys.path[0], 'views/dataAcquisition.ui')
+        formUI = os.path.join(sys.path[0], 'views/intrinsicAcquisition.ui')
         file = QtCore.QFile(formUI)
         file.open(QtCore.QFile.ReadOnly)
         loader = QtUiTools.QUiLoader()

@@ -5,6 +5,10 @@ from DataAcquisition import *
 
 
 class EventsManualAcquisition():
+    """ 
+    Events for manual intrinsic acquisition 
+    """
+    
     def __init__(self):
         super(EventsManualAcquisition).__init__()
         self.camera = DataAcquisition()
@@ -20,6 +24,7 @@ class EventsManualAcquisition():
         if (whichCamera == 'DEPTH'):
             self.whichCamera = 'DEPTH'
         if (whichCamera == 'THERMAL'):
+            
             self.camera.initThermalCamera()
             self.whichCamera = 'THERMAL'
 
