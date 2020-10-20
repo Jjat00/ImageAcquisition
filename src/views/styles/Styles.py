@@ -1,37 +1,30 @@
-from PySide2 import *
+from PySide2 import QtGui, QtCore
 relativePathIcons = '../public/icons/'
 
 class Styles():
     def __init__(self, widget):
         super(Styles).__init__()
         self.widgetAcq = widget
-        self.theme1()
+        self.themeHighContrast()
         self.setIcons()
         self.formStyle()
 
-    def theme1(self):
-        self.primaryColor = '#F44336'
-        self.secondaryColor = '#263238'
-        self.buttons = '#00E676'
-        self.frameCamera = '#212121'
-        self.primaryText = '#212121'
-        self.secondaryText = '#757575'
-        self.lineEdit = '#f5f5f5'
-        self.progressBar = '#ff795e'
-
-    def theme2(self):
-        self.primaryColor = '#7f0000'
+    def themeHighContrast(self):
+        """ 
+        set color high constrast 
+        """
+        self.primaryColor = '#f44333'
         self.secondaryColor = '#ffffff'
-        self.buttons = '#b71c1c'
-        self.frameCamera = '#e0e0e0'
-        self.primaryText = '#212121'
-        self.secondaryText = '#000a12'
-        self.lineEdit = '#f5f5f5'
+        self.buttons = '#ffffff'
+        self.frameCamera = '#212121'
+        self.primaryText = '#f5f5f5'
+        self.secondaryText = '#757575'
         self.progressBar = '#ff795e'
+        self.lineEdit = '#263238'
 
     def setIcons(self):
         self.widgetAcq.window.onButton.setIcon(
-            QtGui.QPixmap(relativePathIcons+'playCamera.png'))
+            QtGui.QPixmap(relativePathIcons+'camera.png'))
         self.widgetAcq.window.onButton.setIconSize(QtCore.QSize(30, 30))
 
         self.widgetAcq.window.offButton.setIcon(
@@ -80,13 +73,13 @@ class Styles():
                 }            
                 QTabBar::tab:selected {
                     background: """+self.primaryColor+""";
-                    Color: """+self.secondaryColor+""";
-                }
-                QTabBar::tab:!selected {
                     Color: """+self.primaryText+""";
                 }
+                QTabBar::tab:!selected {
+                    Color: """+self.frameCamera+""";
+                }
                 QTabBar::tab:!selected:hover {
-                    Color: """+self.secondaryColor+""";
+                    Color: """+self.primaryText+""";
                 }
                 QPushButton{
                     Background: """+self.buttons + """;
@@ -103,22 +96,25 @@ class Styles():
                     background-color: """+self.primaryColor+""";
                     border-style: inset;
                 } 
-                QComboBox{
-                    Background: """+self.buttons + """;
-                    border-radius: 3px;
-                    color: """+self.primaryText + """;
-                    min-height: 40px;
-                }        
-                QComboBox QAbstractItemView {
-                    border: 2px solid darkgray;
-                    selection-background-color: lightgray;
-                }
+                QComboBox {
+                    Background: """ + self.primaryText + """;
+                    color: """ + self.lineEdit + """;
+                    min-height: 25px;
+                }   
+                QComboBox:!selected {
+                    Background: """ + self.primaryText + """;
+                    color: """ + self.lineEdit + """;
+                }   
+                QComboBox:!on {
+                    Background: """ + self.primaryText + """;
+                    color: """ + self.lineEdit + """;
+                } 
                 QLineEdit { 
-                    Background: """+self.lineEdit + """;    
-                    color:  """+self.secondaryText+""";
-                    border: 1px solid """+self.primaryColor + """;    
+                    Background: """ + self.primaryText + """;    
+                    color:  """ + self.lineEdit + """;
+                    border: 1px solid """ + self.secondaryText + """;    
                     text-align: center;
-                }
+                } 
                 QLabel {
                     color: """+self.secondaryText + """;
                     font-size: 11pt;
@@ -155,7 +151,7 @@ class Styles():
         
         styleLabelNoImage = """
             background: """+self.secondaryColor+""";
-            color: """+self.primaryText+""";
+            color: """+self.frameCamera+""";
             font: bold, Ubuntu sans-serif;
             font-size: 14pt;
         """

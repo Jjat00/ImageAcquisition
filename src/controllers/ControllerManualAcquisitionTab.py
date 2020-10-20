@@ -1,50 +1,50 @@
-from PySide2 import  *
-from ControllerManualAcquisition import *
+from PySide2 import QtWidgets
+from EventsManualAcquisition import *
 
-class ManualAcquisition():
+class ControllerManualAcquisitionTab():
     def __init__(self, window):
-        super(ManualAcquisition).__init__()
+        super(ControllerManualAcquisitionTab).__init__()
         self.window = window
-        self.controller = ControllerManualAcquisition()
+        self.event = EventsManualAcquisition()
 
     def handlerTurnOnRGBCamera(self):
-        rgbImage = self.controller.turnOnCamera(0)
+        rgbImage = self.event.turnOnCamera('RGB')
         self.window.displayManual.addWidget(rgbImage)
 
     def handlerTurnOnDepthCamera(self):
-        depthImage = self.controller.turnOnCamera(1)
+        depthImage = self.event.turnOnCamera('DEPTH')
         self.window.displayManual.addWidget(depthImage)
 
     def handlerTurnOnThermalCamera(self):
-        thermalImage = self.controller.turnOnCamera(2)
+        thermalImage = self.event.turnOnCamera('THERMAL')
         self.window.displayManual.addWidget(thermalImage)
 
     def handlerCaptureRGBImage(self):
-        rgbImage = self.controller.captureImage(0)
+        rgbImage = self.event.captureImage('RGB')
         self.window.displayManual.addWidget(rgbImage)
 
     def handlerCaptureDepthmage(self):
-        depthImage = self.controller.captureImage(1)
+        depthImage = self.event.captureImage('DEPTH')
         self.window.displayManual.addWidget(depthImage)
 
     def handlerCaptureThermalImage(self):
-        thermalImage = self.controller.captureImage(2)
+        thermalImage = self.event.captureImage('THERMAL')
         self.window.displayManual.addWidget(thermalImage)
         
     def handlerSaveRgbImage(self):
         nameImage = self.saveDialog()
-        self.controller.saveImage(0, nameImage)
+        self.event.saveImage('RGB', nameImage)
 
     def handlerSaveDepthImage(self):
         nameImage = self.saveDialog()
-        self.controller.saveImage(1, nameImage)
+        self.event.saveImage('DEPTH', nameImage)
 
     def handlerSaveThermalImage(self):
         nameImage = self.saveDialog()
-        self.controller.saveImage(2, nameImage)
+        self.event.saveImage('THERMAL', nameImage)
 
     def handlerTurnOffCamera(self):
-        self.controller.turnOffCamera()
+        self.event.turnOffCamera()
 
     def handlerNone(self):
         print("NONE")
@@ -52,5 +52,5 @@ class ManualAcquisition():
     def saveDialog(self):
         nameImage = QtWidgets.QFileDialog.getSaveFileName(
             self.window, 'Save as', '../data/images', selectedFilter='*.png')
-        nameImage = nameImage[0]+".png"
+        nameImage = "%s.png" % nameImage[0]
         return nameImage
